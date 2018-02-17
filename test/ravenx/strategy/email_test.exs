@@ -43,5 +43,24 @@ defmodule Ravenx.Strategy.EmailTest do
     test "requires a valid adapter", %{payload: payload} do
       assert {:error, {:adapter_not_found, :wadus}} == Email.call(payload, %{adapter: :wadus})
     end
+
+    test "requires :to in payload", %{payload: payload, opts: opts} do
+      new_payload = Map.delete(payload, :to)
+      assert {:error, {:missing_config, :to}} == Email.call(new_payload, opts)
+    end
+
+    test "requires :from in payload", %{payload: payload, opts: opts} do
+      new_payload = Map.delete(payload, :from)
+      assert {:error, {:missing_config, :from}} == Email.call(new_payload, opts)
+    end
+
+    test "can recognise errors", %{payload: payload, opts: opts} do
+      with_mock Bamboo.Mailer,
+        deliver_now: fn _, _, _ ->
+          raise RuntimeError, "Ooops!"
+        end do
+        assert {:error, {:exception, _}} = Email.call(payload, opts)
+      end
+    end
   end
 end
