@@ -25,6 +25,9 @@ defmodule RavenxEmail.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:ravenx, "~> 1.1 or ~> 2.0"},
+      {:bamboo, "~> 0.8 or ~> 1.0"},
+      {:bamboo_smtp, "~> 1.4 or ~> 1.5"},
       {:ex_doc, ">= 0.0.0", only: :dev},
       {:mock, "~> 0.3.0", only: :test},
       {:credo, "~> 0.8", only: [:dev, :test], runtime: false}
