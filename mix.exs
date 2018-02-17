@@ -51,7 +51,7 @@ defmodule RavenxEmail.MixProject do
   defp package do
     # These are the default files included in the package
     [
-      name: :ravenx_slack,
+      name: :ravenx_email,
       files: ["lib", "mix.exs", "README*", "LICENSE*"],
       maintainers: ["Óscar de Arriba"],
       licenses: ["MIT"],
