@@ -78,10 +78,8 @@ defmodule Ravenx.Strategy.Email do
   defp send_email(%Bamboo.Email{from: nil}, _opts), do: {:error, {:missing_config, :from}}
 
   defp send_email(%Bamboo.Email{} = email, opts) do
-    adapter =
-      opts
-      |> Map.get(:adapter)
-      |> available_adapter()
+    adapter_key = Map.get(opts, :adapter)
+    adapter = available_adapter(adapter_key)
 
     case adapter do
       {:ok, adapter} ->
@@ -96,7 +94,7 @@ defmodule Ravenx.Strategy.Email do
         end
 
       {:error, _} ->
-        {:error, {:adapter_not_found, adapter}}
+        {:error, {:adapter_not_found, adapter_key}}
     end
   end
 
